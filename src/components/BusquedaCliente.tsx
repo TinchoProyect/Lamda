@@ -7,7 +7,7 @@ import { formatNumeroCliente } from '../utils/numeroClienteMap';
 import { Cliente } from '../types/cliente';
 import InformeCliente from './InformeCliente';
 
-const MAX_RESULTS = 10; // Límite de clientes visibles
+const MAX_RESULTS = 5; // Límite de clientes visibles
 
 const BusquedaCliente = () => {
   const { clientes, isLoading } = useClientes(); // Obtener los clientes y el estado de carga del contexto

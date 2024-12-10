@@ -11,3 +11,9 @@
   .table td {
     text-align: center;
   }
+
+  @media print {
+    .no-print {
+      display: none;
+    }
+  }

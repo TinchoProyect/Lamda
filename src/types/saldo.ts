@@ -3,5 +3,4 @@ export type Saldo = {
     Monto: number;
     Fecha: string;
     Usuario: string;
-    UltimaModificacion: string;
 };
