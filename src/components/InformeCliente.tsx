@@ -20,6 +20,7 @@ const InformeCliente = ({ onBack, cliente }: InformeClienteProps) => {
 
   const isLoading = isLoadingMovDetalles || isLoadingMov || isLoadingSaldo;
 
+<<<<<<< HEAD
   // Formateador para números en formato regional argentino
   const formatter = new Intl.NumberFormat('es-AR', {
     minimumFractionDigits: 2,
@@ -29,6 +30,18 @@ const InformeCliente = ({ onBack, cliente }: InformeClienteProps) => {
   // Obtener la fecha actual
   const fechaActual = new Date().toLocaleDateString('es-AR');
 
+=======
+  const Lamda = {
+    titular: "MARTIN IGNACIO SERRANO",
+    dni: 24892174,
+    cuit: "23-24892174-9",
+    tipoDeCuenta: "Caja de ahorro en pesos",
+    numeroDeCuenta: "4007844-1 373-4",
+    cbu: "0070373230004007844141",
+    alias: "LAMDA.SER.MARTIN"
+  }
+
+>>>>>>> 74c1423031465a2cea716086b0ba5122f155e6e1
   // Función auxiliar para capitalizar la primera letra
   const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -36,6 +49,8 @@ const InformeCliente = ({ onBack, cliente }: InformeClienteProps) => {
 
   // Obtener el saldo inicial del contexto o establecerlo en 0 si no está disponible
   const saldoInicial = saldo ? saldo.Monto : 0;
+  const fechaCorte = saldo ? saldo.Fecha : '';
+  console.log(movimientos[0].fecha)
 
   // Ordenar movimientos por fecha (más recientes primero)
   const sortedMovimientos = [...movimientos].sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
@@ -89,6 +104,7 @@ const InformeCliente = ({ onBack, cliente }: InformeClienteProps) => {
         </div>
       ) : (
         <>
+<<<<<<< HEAD
           {Object.entries(movimientosPorMes).map(([mesYAnio, movimientos]) => (
             <div key={mesYAnio} className="mb-4">
               <h4 className="text-secondary mb-3">
@@ -131,13 +147,65 @@ const InformeCliente = ({ onBack, cliente }: InformeClienteProps) => {
                             ))}
                           </tbody>
                         </table>
+=======
+          {Object.entries(movimientosPorMes).map(([mesYAnio, movimientos]) => {
+            const movimientosFiltrados = fechaCorte
+              ? movimientos.filter(mov => new Date(mov.fecha) >= new Date(fechaCorte))
+              : movimientos;
+
+            return (
+              <div key={mesYAnio} className="mb-4">
+                {/* Título del mes */}
+                <h4 className="text-secondary mb-3">
+                  {capitalizeFirstLetter(new Date(movimientos[0].fecha).toLocaleDateString('es-AR', { year: 'numeric', month: 'long' }))}
+                </h4>
+
+                {/* Listado de movimientos */}
+                {movimientosFiltrados.map((mov) => (
+                  <div key={mov.codigo} className="mb-4">
+                    <div className="border p-3 rounded bg-light">
+                      <div className="justify-content-between d-flex">
+                        <h5>
+                          {comprobanteMap[mov.nombre_comprobante] || mov.nombre_comprobante}{' '}
+                          <span className="text-success">${mov.importe_total.toFixed(2)}</span>
+                        </h5>
+                        <p>
+                          <strong>Número:</strong>{' '}
+                          {formatNumeroFactura(detallesPorMovimiento[mov.codigo]?.[0]?.Punto_Venta_Detalle, mov.numero)}
+                        </p>
+                        <p>
+                          <strong>Fecha:</strong> {new Date(mov.fecha).toLocaleDateString('es-AR')}
+                        </p>
+>>>>>>> 74c1423031465a2cea716086b0ba5122f155e6e1
                       </div>
-                    )}
+                      {['FA', 'FB', 'FC', 'FD'].includes(mov.nombre_comprobante) && (
+                        <div>
+                          <table className="table table-bordered mt-3">
+                            <thead>
+                              <tr>
+                                <th>Artículo</th>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {detallesPorMovimiento[mov.codigo]?.map((detalle) => (
+                                <tr key={detalle.Numero_Movimiento}>
+                                  <td>{detalle.Articulo_Detalle}</td>
+                                  <td>{detalle.Descripcion_Detalle}</td>
+                                  <td>{detalle.Cantidad_Detalle}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ))}
+                ))}
+              </div>
+            );
+          })}
         </>
       )}
     </div>
