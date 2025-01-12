@@ -8,7 +8,11 @@ import { Cliente } from '../types/cliente';
 import InformeCliente from './InformeCliente';
 import './BusquedaCliente.css';
 
+<<<<<<< HEAD
 const MAX_RESULTS = 10;
+=======
+const MAX_RESULTS = 5; // Límite de clientes visibles
+>>>>>>> 74c1423031465a2cea716086b0ba5122f155e6e1
 
 const BusquedaCliente = () => {
   const { clientes, isLoading } = useClientes();
